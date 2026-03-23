@@ -20,36 +20,52 @@ public class SysRoleController {
     @Autowired
     private SysRoleService sysRoleService;
 
-    // http://localhost:8080/admin/system/sysRole/findAll
-
-    // http://localhost:8080/admin/system/sysRole/findAll
+//    // http://localhost:8080/admin/system/sysRole/findAll
 
     // 查询全部记录
+//    @ApiOperation("查询全部接口")
+//    @GetMapping("/findAll")
+//    public List<SysRole> findAll()
+//    {
+//        List<SysRole> list = this.sysRoleService.list();
+//        return list;
+//    }
+//
+//    // 根据id 去逻辑删除
+//  @ApiOperation("逻辑删除接口")
+//    @DeleteMapping("/remove/{id}")
+//    public boolean removeRole(@PathVariable Long id)
+//    {
+//        boolean isSuccess = this.sysRoleService.removeById(id);
+//        return isSuccess;
+//    }
+
     @ApiOperation("查询全部接口")
     @GetMapping("/findAll")
-    public List<SysRole> findAll()
-    {
+    public Result findAll() {
+
         List<SysRole> list = this.sysRoleService.list();
-        return list;
+        return Result.ok(list);
     }
 
     // 根据id 去逻辑删除
     @ApiOperation("逻辑删除接口")
     @DeleteMapping("/remove/{id}")
-    public boolean removeRole(@PathVariable Long id)
-    {
+    public Result removeRole(@PathVariable Long id) {
         boolean isSuccess = this.sysRoleService.removeById(id);
-        return isSuccess;
+        if (isSuccess) {
+            return Result.ok();
+        } else {
+            return Result.fail();
+        }
     }
 
     @ApiOperation("角色分页查询")
     @GetMapping("/{page}/{limit}")
     public Result findRoleByPageQuery(@PathVariable Long page,
-                                      @PathVariable Long limit,
-                                      SysRoleQueryVo roleQueryVo)
-    {
-        IPage<SysRole> page1 = new Page<>(page,limit);
-        page1 =   this.sysRoleService.selectPage(page1,roleQueryVo);
+                                      @PathVariable Long limit,SysRoleQueryVo roleQueryVo) {
+        IPage<SysRole> page1 = new Page<>(page, limit);
+        page1 = this.sysRoleService.selectPage(page1, roleQueryVo);
         return Result.ok(page1);
     }
 }
