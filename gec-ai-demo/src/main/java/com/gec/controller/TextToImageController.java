@@ -138,20 +138,23 @@ public class TextToImageController {
     @RequestMapping("/videoeffect")
     public String videoeffect() throws Exception
     {
-
+        System.out.println("开始生成视频...");
+        
         VideoSynthesis vs = new VideoSynthesis();
         VideoSynthesisParam param =
                 VideoSynthesisParam.builder()
                         .apiKey("sk-187168a84c074634b5f8c277af16657d")
                         .model("wanx2.1-kf2v-plus")
-                        //.prompt("一幅都市奇幻艺术的场景。一个充满动感的涂鸦艺术角色。一个由喷漆所画成的少年，正从一面混凝土墙上活过来。他一边用极快的语速演唱一首英文rap，一边摆着一个经典的、充满活力的说唱歌手姿势。场景设定在夜晚一个充满都市感的铁路桥下。灯光来自一盏孤零零的街灯，营造出电影般的氛围，充满高能量和惊人的细节。视频的音频部分完全由他的rap构成，没有其他对话或杂音。")
                         .firstFrameUrl("https://ty-yuanfang.oss-cn-hangzhou.aliyuncs.com/lizhengjia.lzj/tmp/11.png")
                         .duration(5)
                         .resolution("480P")
                         .template("hanfu-1")
                         .build();
-        System.out.println("please wait...");
+        
+        System.out.println("参数配置完成，调用API...");
         VideoSynthesisResult result = vs.call(param);
+        
+        System.out.println("视频生成完成");
         System.out.println(JsonUtils.toJson(result));
         return JsonUtils.toJson(result);
     }

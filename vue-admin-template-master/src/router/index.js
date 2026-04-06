@@ -48,6 +48,23 @@ export const constantRoutes = [
       }
     ]
   },
+
+  {
+    path: '/ai',
+    component: Layout,
+    redirect: '/ai/ocean-qa',
+    name: 'AI问答',
+    meta: { title: 'AI海洋问答', icon: 'el-icon-chat-dot-round' },
+    children: [
+      {
+        path: 'ocean-qa',
+        name: 'OceanAIQA',
+        component: () => import('@/views/ai/OceanAIQA'),
+        meta: { title: '海洋知识问答', icon: 'el-icon-chat-line-square' }
+      }
+    ]
+  },
+
   { path: '*', redirect: '/404', hidden: true }
 ]
 
