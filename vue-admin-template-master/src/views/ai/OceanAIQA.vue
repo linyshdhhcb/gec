@@ -3,7 +3,7 @@
     <!-- 页面标题和logo -->
     <div class="header">
       <div class="logo-container">
-        <img src="@/assets/image/gdou.png" alt="GDou Logo" class="logo" />
+        <div class="logo-placeholder">🌊</div>
         <div class="title-container">
           <h1 class="main-title">海洋知识AI问答</h1>
           <p class="subtitle">探索海洋奥秘，AI实时解答</p>
@@ -60,7 +60,7 @@
             <div v-if="msg.type === 'ai'" class="message-content ai">
               <div class="message-header">
                 <div class="avatar ai-avatar">
-                  <img src="@/assets/image/ai.png" alt="AI" />
+                  <span class="avatar-icon">🤖</span>
                 </div>
                 <span class="sender-name">海洋AI助手</span>
                 <span class="message-time">{{ msg.time }}</span>
@@ -93,7 +93,7 @@
                 <span class="message-time">{{ msg.time }}</span>
                 <span class="sender-name">您</span>
                 <div class="avatar user-avatar">
-                  <img src="@/assets/image/cele.png" alt="User" />
+                  <span class="avatar-icon">👤</span>
                 </div>
               </div>
               <div class="message-body">
@@ -414,9 +414,15 @@ export default {
   gap: 20px;
 }
 
-.logo {
+.logo-placeholder {
+  width: 50px;
   height: 50px;
-  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  background: linear-gradient(135deg, #1976d2, #42a5f5);
+  border-radius: 8px;
 }
 
 .title-container {
@@ -586,12 +592,14 @@ export default {
   height: 32px;
   border-radius: 50%;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e0e0;
 }
 
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.avatar-icon {
+  font-size: 18px;
 }
 
 .sender-name {

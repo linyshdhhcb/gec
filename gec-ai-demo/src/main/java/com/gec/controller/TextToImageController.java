@@ -20,10 +20,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+/**
+ * 阿里云百炼AI多媒体生成控制器
+ * 提供文字生成图片、文字生成视频、图生视频、视频特效、文字生成音频等功能
+ *
+ * @author gec
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/ai")
 public class TextToImageController {
 
+    /**
+     * 文字生成图片接口
+     * 使用阿里云通义万相 qwen-image-plus 模型，根据文本描述生成高质量图片
+     *
+     * @param message 图片描述提示词，默认为"美女"
+     * @return JSON格式的图片生成结果，包含图片URL等信息
+     * @throws Exception 生成失败时抛出异常
+     */
     @RequestMapping("/texttoimage")
     public String texttoImage(@RequestParam(defaultValue = "美女") String message) throws Exception{
 
@@ -50,6 +65,14 @@ public class TextToImageController {
         return JsonUtils.toJson(result);
     }
 
+    /**
+     * 文字生成视频接口
+     * 使用阿里云通义万相 wan2.5-t2v-preview 模型，根据文本描述和音频生成视频
+     *
+     * @param message 视频场景描述提示词，默认为小猫将军的史诗场景
+     * @return JSON格式的视频生成结果，包含视频URL等信息
+     * @throws Exception 生成失败时抛出异常
+     */
     @RequestMapping("/texttovideo")
     public String texttovideo(@RequestParam(defaultValue = "一幅史诗级可爱的场景。一只小巧可爱的卡通小猫将军，身穿细节精致的金色盔甲，头戴一个稍大的头盔，勇敢地站在悬崖上。他骑着一匹虽小但英勇的战马，说：\"青海长云暗雪山，孤城遥望玉门关。黄沙百战穿金甲，不破楼兰终不还。\"。悬崖下方，一支由老鼠组成的、数量庞大、无穷无尽的军队正带着临时制作的武器向前冲锋。这是一个戏剧性的、大规模的战斗场景，灵感来自中国古代的战争史诗。远处的雪山上空，天空乌云密布。整体氛围是\"可爱\"与\"霸气\"的搞笑和史诗般的融合。") String message) throws Exception{
         VideoSynthesisParam param =
@@ -69,6 +92,13 @@ public class TextToImageController {
         return JsonUtils.toJson(result);
     }
 
+    /**
+     * 文字生成音频接口（语音合成TTS）
+     * 使用阿里云CosyVoice cosyvoice-v2 模型，将文本转换为语音并保存为MP3文件
+     *
+     * @param message 待合成的文本内容，默认为《静夜思》
+     * @return 操作结果提示信息
+     */
     @RequestMapping("/texttoaudio")
     public String texttoaudio(@RequestParam(defaultValue = "静夜思 唐 李白 床前明月光,疑是地上霜,举头望明月,低头思故乡") String message){
         try {
@@ -114,6 +144,14 @@ public class TextToImageController {
         }
     }
 
+    /**
+     * 图生视频接口
+     * 使用阿里云通义万相 wan2.5-i2v-preview 模型，根据静态图片和音频生成动态视频
+     * 支持图片中的角色根据音频内容进行动作和口型同步
+     *
+     * @return JSON格式的视频生成结果，包含视频URL等信息
+     * @throws Exception 生成失败时抛出异常
+     */
     @RequestMapping("/imagetovide")
     public String imagetovide() throws Exception
     {
@@ -135,6 +173,14 @@ public class TextToImageController {
         return JsonUtils.toJson(result);
     }
 
+    /**
+     * 视频特效生成接口
+     * 使用阿里云通义万相 wanx2.1-kf2v-plus 模型，为静态图片添加特效动画
+     * 支持多种模板效果（如汉服、古风等）
+     *
+     * @return JSON格式的视频生成结果，包含视频URL等信息
+     * @throws Exception 生成失败时抛出异常
+     */
     @RequestMapping("/videoeffect")
     public String videoeffect() throws Exception
     {
