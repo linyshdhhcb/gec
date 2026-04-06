@@ -270,7 +270,8 @@ export default {
     
     async streamAIResponse(question, messageIndex) {
       try {
-        const API_URL = 'http://localhost:8899/ai/chatstream';
+        // 使用相对路径，通过代理转发到后端
+        const API_URL = '/ai/chatstream';
         
         const response = await fetch(`${API_URL}?message=${encodeURIComponent(question)}&chatId=${Date.now()}`, {
           method: 'GET',

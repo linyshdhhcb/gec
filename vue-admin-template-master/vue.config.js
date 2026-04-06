@@ -38,10 +38,19 @@ module.exports = {
     },
     //before: require('./mock/mock-server.js')
     proxy: {
-      '/dev-api': { // 匹配所有以 '/dev-api'开头的请求路径
-        target: 'http://localhost:8085',
-        changeOrigin: true, // 支持跨域
-        pathRewrite: { // 重写路径: 去掉路径中开头的'/dev-api'
+      // AI相关接口代理到 8899 端口
+      '/ai': {
+        target: 'http://localhost:8899',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ai': '/ai'
+        }
+      },
+      // 系统管理接口代理到 8086 端口
+      '/dev-api': {
+        target: 'http://localhost:8086',
+        changeOrigin: true,
+        pathRewrite: {
           '^/dev-api': ''
         }
       }
