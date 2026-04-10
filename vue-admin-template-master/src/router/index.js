@@ -42,7 +42,7 @@ export const constantRoutes = [
       },
       {
         path: 'sysUser',  // 子路径
-        name: 'Tree',
+        name: 'SysUser',
         component: () => import('@/views/system/sysUser/list'),
         meta: { title: '用户管理', icon: 'tree' }
       }
