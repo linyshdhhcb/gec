@@ -1,0 +1,26 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!gec-model/src/main/java
+!**/src/test/**
+
+### STS ###
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### front ###
+**/dist
+**/volunteer-web
+**/volunteer-screen
+**/node_modules
+**/.vscode
