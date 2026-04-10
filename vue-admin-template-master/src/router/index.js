@@ -52,10 +52,16 @@ export const constantRoutes = [
   {
     path: '/ai',
     component: Layout,
-    redirect: '/ai/ocean-qa',
-    name: 'AI问答',
-    meta: { title: 'AI海洋问答', icon: 'el-icon-chat-dot-round' },
+    redirect: '/ai/texttoimage',
+    name: 'AI功能',
+    meta: { title: 'AI功能中心', icon: 'el-icon-chat-dot-round' },
     children: [
+      {
+        path: 'texttoimage',
+        name: 'TextToImage',
+        component: () => import('@/views/ai/TextToImage'),
+        meta: { title: '文字生成图片', icon: 'el-icon-picture' }
+      },
       {
         path: 'ocean-qa',
         name: 'OceanAIQA',
