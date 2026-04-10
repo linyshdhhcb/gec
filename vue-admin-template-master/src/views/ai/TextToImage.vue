@@ -349,7 +349,7 @@ export default {
 <style scoped>
 .text-to-image-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #87CEEB 0%, #4A90E2 50%, #1E90FF 100%);
   padding: 20px;
 }
 
@@ -414,7 +414,7 @@ export default {
 
 .card-header {
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4A90E2 0%, #1E90FF 100%);
   color: white;
   display: flex;
   align-items: center;
@@ -505,7 +505,7 @@ export default {
 }
 
 .generate-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4A90E2 0%, #1E90FF 100%);
   color: white;
 }
 
@@ -725,12 +725,12 @@ export default {
 }
 
 .download-btn {
-  background: #667eea;
+  background: #4A90E2;
   color: white;
 }
 
 .download-btn:hover {
-  background: #5568d3;
+  background: #1E90FF;
   transform: translateY(-2px);
 }
 

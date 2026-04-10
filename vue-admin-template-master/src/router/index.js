@@ -63,6 +63,12 @@ export const constantRoutes = [
         meta: { title: '文字生成图片', icon: 'el-icon-picture' }
       },
       {
+        path: 'multimedia',
+        name: 'Multimedia',
+        component: () => import('@/views/ai/Multimedia'),
+        meta: { title: '多媒体创作', icon: 'el-icon-video-camera' }
+      },
+      {
         path: 'ocean-qa',
         name: 'OceanAIQA',
         component: () => import('@/views/ai/OceanAIQA'),
