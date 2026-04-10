@@ -61,9 +61,10 @@
         </template>
       </el-table-column>
       <el-table-column prop="createTime" label="创建时间" width="160"/>
-      <el-table-column label="操作" width="200" align="center">
+      <el-table-column label="操作" width="280" align="center">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="edit(scope.row.id)" title="修改"/>
+          <el-button type="warning" icon="el-icon-user" size="mini" @click="assignRole(scope.row.id)" title="分配角色"/>
           <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeDataById(scope.row.id)" title="删除"/>
         </template>
       </el-table-column>
@@ -117,6 +118,29 @@
       </span>
     </el-dialog>
 
+    <!-- 分配角色弹框 -->
+    <el-dialog title="分配角色" :visible.sync="roleDialogVisible" width="40%">
+      <el-form label-width="80px" size="small">
+        <el-form-item label="用户名">
+          <el-input v-model="currentUsername" disabled/>
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-checkbox-group v-model="selectedRoleIds">
+            <el-checkbox 
+              v-for="role in allRoles" 
+              :key="role.id" 
+              :label="role.id">
+              {{ role.roleName }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="roleDialogVisible = false" size="small" icon="el-icon-refresh-right">取 消</el-button>
+        <el-button type="primary" icon="el-icon-check" @click="saveAssignRoles" size="small">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -134,7 +158,13 @@ export default {
       sysUser:{},
       dialogVisible:false,  // 控制弹框的默认隐藏
       // 选中的数据
-      selectValueData:[]
+      selectValueData:[],
+      // 角色分配相关
+      roleDialogVisible: false,  // 角色分配对话框
+      currentUserId: null,       // 当前用户ID
+      currentUsername: '',       // 当前用户名
+      allRoles: [],              // 所有角色列表
+      selectedRoleIds: []        // 已选择的角色ID列表
     }
   },
   created () {
@@ -254,6 +284,37 @@ export default {
             // 刷新页面
             this.fetchData();
           });
+      });
+    },
+    // 分配角色
+    assignRole(userId) {
+      this.currentUserId = userId;
+      this.roleDialogVisible = true;
+      
+      // 获取当前用户信息
+      api.getUserById(userId).then(response => {
+        this.currentUsername = response.data.username;
+      });
+      
+      // 获取所有角色列表
+      api.findAllRoles().then(response => {
+        this.allRoles = response.data;
+      });
+      
+      // 获取该用户已分配的角色
+      api.findRolesByUserId(userId).then(response => {
+        const userRoles = response.data;
+        this.selectedRoleIds = userRoles.map(role => role.id);
+      });
+    },
+    // 保存角色分配
+    saveAssignRoles() {
+      api.assignRoles(this.currentUserId, this.selectedRoleIds).then(response => {
+        this.$message({
+          type: "success",
+          message: "角色分配成功!",
+        });
+        this.roleDialogVisible = false;
       });
     },
   }

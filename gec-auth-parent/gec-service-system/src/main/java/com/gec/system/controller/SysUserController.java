@@ -3,8 +3,11 @@ package com.gec.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.gec.model.system.SysRole;
 import com.gec.model.system.SysUser;
 import com.gec.system.config.Result;
+import com.gec.system.service.SysRoleService;
+import com.gec.system.service.SysUserRoleService;
 import com.gec.system.service.SysUserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,12 @@ public class SysUserController {
 
     @Autowired
     private SysUserService sysUserService;
+
+    @Autowired
+    private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
 
     @ApiOperation("查询全部用户接口")
     @GetMapping("/findAll")
@@ -85,5 +94,26 @@ public class SysUserController {
         } else {
             return Result.fail();
         }
+    }
+
+    @ApiOperation("获取所有角色列表")
+    @GetMapping("/findAllRoles")
+    public Result findAllRoles() {
+        List<SysRole> roleList = this.sysRoleService.findAllRoles();
+        return Result.ok(roleList);
+    }
+
+    @ApiOperation("根据用户ID获取角色列表")
+    @GetMapping("/findRolesByUserId/{userId}")
+    public Result findRolesByUserId(@PathVariable Long userId) {
+        List<SysRole> roleList = this.sysRoleService.findRolesByUserId(userId);
+        return Result.ok(roleList);
+    }
+
+    @ApiOperation("为用户分配角色")
+    @PostMapping("/assignRoles")
+    public Result assignRoles(@RequestParam Long userId, @RequestBody Long[] roleIds) {
+        this.sysUserRoleService.assignRoles(userId, roleIds);
+        return Result.ok();
     }
 }

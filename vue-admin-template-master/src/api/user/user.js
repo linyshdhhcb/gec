@@ -54,5 +54,30 @@ export default {
       method: 'delete',
       data: ids
     })
+  },
+
+  // 获取所有角色列表
+  findAllRoles() {
+    return request({
+      url: `${BASE_URL}/findAllRoles`,
+      method: 'get'
+    })
+  },
+
+  // 根据用户ID获取角色列表
+  findRolesByUserId(userId) {
+    return request({
+      url: `${BASE_URL}/findRolesByUserId/${userId}`,
+      method: 'get'
+    })
+  },
+
+  // 为用户分配角色
+  assignRoles(userId, roleIds) {
+    return request({
+      url: `${BASE_URL}/assignRoles?userId=${userId}`,
+      method: 'post',
+      data: roleIds
+    })
   }
 }
